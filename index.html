@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTS Pro | Daya Tampung Siswa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">DTS Pro</h1>
+                <button class="close-sidebar-btn">&times;</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+                <a href="#daya-tampung" class="nav-item"><i class="fas fa-tasks"></i><span>Detail Daya Tampung</span></a>
+                <a href="#tren-siswa" class="nav-item"><i class="fas fa-chart-line"></i><span>Analisis Tren</span></a>
+                <a href="#laporan" class="nav-item"><i class="fas fa-file-export"></i><span>Laporan & Export</span></a>
+                <a href="#audit-log" class="nav-item"><i class="fas fa-history"></i><span>Audit Log</span></a>
+                <a href="#pengaturan" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2025 DTS Pro</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="app-bar">
+                <div class="header-left">
+                    <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                    <div class="header-controls">
+                        <div class="select-group">
+                            <label for="sekolah-select">Sekolah:</label>
+                            <select id="sekolah-select"></select>
+                        </div>
+                        <div class="select-group">
+                            <label for="tahun-select">Tahun Ajaran:</label>
+                            <select id="tahun-select"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                     <button id="add-unit-btn" class="glowing-btn"><i class="fas fa-plus"></i> Tambah Unit</button>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <section id="dashboard" class="page active">
+                    <div class="kpi-grid">
+                        <div class="kpi-card color-1"><div class="kpi-icon"><i class="fas fa-bullseye"></i></div><div class="kpi-info"><h4>Total Target Siswa</h4><p id="kpi-total-target">0</p></div></div>
+                        <div class="kpi-card color-2"><div class="kpi-icon"><i class="fas fa-user-check"></i></div><div class="kpi-info"><h4>Total Siswa Terdaftar</h4><p id="kpi-total-siswa">0</p></div></div>
+                        <div class="kpi-card color-3"><div class="kpi-icon"><i class="fas fa-percentage"></i></div><div class="kpi-info"><h4>Rata-rata Capaian</h4><p id="kpi-avg-capaian">0%</p></div></div>
+                        <div class="kpi-card color-4"><div class="kpi-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="kpi-info"><h4>Unit Melebihi Kapasitas</h4><p id="kpi-unit-over">0</p></div></div>
+                    </div>
+                    <div class="chart-grid">
+                        <div class="chart-container"><h3>Komposisi Siswa</h3><div class="chart-wrapper"><canvas id="dashboard-composition-chart"></canvas></div></div>
+                        <div class="chart-container"><h3>Target vs. Realisasi</h3><div class="chart-wrapper"><canvas id="dashboard-comparison-chart"></canvas></div></div>
+                    </div>
+                </section>
+                <section id="daya-tampung" class="page">
+                    <div class="table-controls"><input type="text" id="search-input" placeholder="Cari unit..."><select id="filter-status"><option value="semua">Semua Status</option><option value="Buka">Buka</option><option value="Penuh">Penuh</option></select><button id="reset-filters-btn" class="glowing-btn secondary"><i class="fas fa-sync-alt"></i> Reset</button></div>
+                    <div class="table-wrapper"><table id="daya-tampung-table"><thead><tr><th>#</th><th>Nama Unit</th><th>Target</th><th>PPDB Bersama</th><th>PPDB Mandiri</th><th>Jumlah</th><th>Capaian</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="daya-tampung-tbody"></tbody></table></div>
+                </section>
+                <section id="tren-siswa" class="page"><h2>Analisis Tren Jumlah Siswa</h2><div class="chart-container large"><div class="chart-wrapper"><canvas id="tren-chart"></canvas></div></div></section>
+                <section id="laporan" class="page"><h2>Laporan & Export</h2><div class="export-options"><div class="export-card"><i class="fas fa-file-excel"></i><h3>Excel</h3><p>Export data mentah dan ringkasan.</p><button id="export-excel-btn" class="glowing-btn">Export</button></div><div class="export-card"><i class="fas fa-file-pdf"></i><h3>PDF</h3><p>Buat laporan profesional dengan grafik.</p><button id="export-pdf-btn" class="glowing-btn">Export</button></div><div class="export-card"><i class="fas fa-file-code"></i><h3>JSON</h3><p>Backup seluruh data aplikasi.</p><button id="export-json-btn" class="glowing-btn">Backup</button></div></div></section>
+                <section id="audit-log" class="page"><h2>Timeline Aktivitas</h2><div class="table-wrapper"><table id="audit-log-table"><thead><tr><th>Waktu</th><th>Aktor</th><th>Aksi</th><th>Detail</th></tr></thead><tbody id="audit-log-tbody"></tbody></table></div></section>
+                <section id="pengaturan" class="page">
+                    <h2>Pengaturan</h2>
+                    <div class="settings-grid">
+                        <div class="setting-card"><h3>Manajemen Sekolah</h3><div id="sekolah-list"></div><button id="add-sekolah-btn" class="glowing-btn"><i class="fas fa-plus"></i> Tambah</button></div>
+                        <div class="setting-card"><h3>Manajemen Tahun Ajaran</h3><div id="tahun-ajaran-list"></div><button id="add-tahun-btn" class="glowing-btn"><i class="fas fa-plus"></i> Tambah</button></div>
+                        <div class="setting-card"><h3>Data & Preferensi</h3><p>Impor data dari backup.</p><input type="file" id="import-json-input" accept=".json" style="display:none;"><button id="import-json-btn" class="glowing-btn secondary"><i class="fas fa-upload"></i> Import</button><hr><h4>Role Pengguna</h4><select id="role-select"><option value="Admin">Admin</option><option value="Viewer">Viewer</option></select></div>
+                        <div class="setting-card"><h3>Snapshot Data</h3><p>Simpan versi dataset untuk rollback.</p><input type="text" id="snapshot-label" placeholder="Label, cth: Akhir Semester"><button id="create-snapshot-btn" class="glowing-btn">Buat</button><hr><h4>Daftar Snapshot</h4><ul id="snapshot-list"></ul></div>
+                        <div class="setting-card full-width">
+                            <h3>Kustomisasi Warna Grafik</h3>
+                            <p>Pilih palet warna yang akan digunakan di semua grafik.</p>
+                            <div id="color-picker-container" class="color-picker-container">
+                                </div>
+                            <button id="save-colors-btn" class="glowing-btn"><i class="fas fa-save"></i> Simpan Warna</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <div id="form-modal" class="modal"><div class="modal-content"><span class="close-btn">&times;</span><h3 id="modal-title"></h3><form id="modal-form"></form></div></div>
+    <div id="confirm-modal" class="modal"><div class="modal-content"><h3 id="confirm-title"></h3><p id="confirm-text"></p><div class="modal-actions"><button id="confirm-cancel-btn" class="glowing-btn secondary">Batal</button><button id="confirm-ok-btn" class="glowing-btn danger">Ya</button></div></div></div>
+    <div id="toast-notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
